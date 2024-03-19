@@ -16,7 +16,7 @@ import (
 // GetClient retrieves a token, saves the token, then returns the generated client.
 func GetClient() *http.Client {
 	// Load client secrets
-	b, err := os.ReadFile("credentials.json")
+	b, err := os.ReadFile("../gmpress-aux/credentials.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}
