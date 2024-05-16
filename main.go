@@ -6,7 +6,8 @@ import (
 	"os"
 )
 
-func argtest() {
+func main() {
+
 	args := os.Args[1:] // This will include the `--`, so we might want to remove it.
 
 	// Detect if there is a `--` and remove it and everything before it
@@ -23,14 +24,14 @@ func argtest() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Good running", args[0])
-}
+	fmt.Println("Using cred file:", args[0])
 
-func main() {
-	client := GetClient()
+	client := GetClient(args[0])
 	service, err := NewGmailService(client)
 	if err != nil {
 		log.Fatalf("Unable to retrieve Gmail client: %v", err)
+	} else {
+		fmt.Println("...connected to Gmail")
 	}
 
 	emails, err := FetchRecentEmails(service, 10)
@@ -39,6 +40,6 @@ func main() {
 	}
 
 	for _, email := range emails {
-		fmt.Println("Subject:", email.Subject)
+		fmt.Println("Subject:", email.Subject, " tags: ", email.Tags)
 	}
 }
